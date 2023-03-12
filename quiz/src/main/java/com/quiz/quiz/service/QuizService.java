@@ -22,7 +22,7 @@ public class QuizService {
         return quizRepository.findAll(pageable);
     }
 
-    public Quiz getById(Integer id) {
+    public Quiz getQuizById(Integer id) {
         return quizRepository.findById(id).orElse(null);
     }
 
@@ -30,7 +30,7 @@ public class QuizService {
         return quizRepository.findByOwnerId(userId);
     }
 
-    public Quiz saveQuiz(QuizReqDTO quizReqDTO) {
+    public Quiz createQuiz(QuizReqDTO quizReqDTO) {
         Quiz quiz = new Quiz();
         quiz.setName(quizReqDTO.name());
         quiz.setDescription(quizReqDTO.description());
@@ -44,7 +44,7 @@ public class QuizService {
     }
 
     public Quiz updateQuiz(Integer quizId, QuizReqDTO quizReqDTO) {
-        Quiz quiz = getById(quizId);
+        Quiz quiz = getQuizById(quizId);
         quiz.setName(quizReqDTO.name());
         quiz.setDescription(quizReqDTO.description());
         quiz.setLastUpdate(LocalDateTime.now());
@@ -53,11 +53,16 @@ public class QuizService {
         return quizRepository.save(quiz);
     }
 
-    public void deleteQuiz(Integer id) {
-        Quiz quiz = getById(id);
-        quiz.setStatus(QuizStatus.DELETED);
+    public Quiz changeQuizStatus(Integer quizId, QuizStatus quizStatus) {
+        Quiz quiz = getQuizById(quizId);
+        quiz.setStatus(quizStatus);
         quizRepository.save(quiz);
+        return quiz;
+    }
 
+
+    public void deleteQuiz(Integer id) {
+        quizRepository.deleteById(id);
         // provjeriti da li je kviz radjen, tj da li postoje rezulatati za njega
         // ako ne skroz ga obrisati, zajedno sa njegovim pitanjima
     }

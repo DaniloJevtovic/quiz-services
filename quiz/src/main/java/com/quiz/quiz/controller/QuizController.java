@@ -2,6 +2,7 @@ package com.quiz.quiz.controller;
 
 import com.quiz.quiz.dto.QuizReqDTO;
 import com.quiz.quiz.model.Quiz;
+import com.quiz.quiz.model.QuizStatus;
 import com.quiz.quiz.service.QuizService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -24,7 +25,7 @@ public class QuizController {
 
     @GetMapping("/{id}")
     public Quiz getQuizById(@PathVariable Integer id) {
-        return quizService.getById(id);
+        return quizService.getQuizById(id);
     }
 
     @GetMapping("/user/{userId}")
@@ -33,13 +34,18 @@ public class QuizController {
     }
 
     @PostMapping
-    public Quiz saveQuiz(@RequestBody QuizReqDTO dto) {
-        return quizService.saveQuiz(dto);
+    public Quiz createQuiz(@RequestBody QuizReqDTO dto) {
+        return quizService.createQuiz(dto);
     }
 
     @PutMapping("/{id}")
     public Quiz updateQuiz(@PathVariable Integer id, @RequestBody QuizReqDTO dto) {
         return quizService.updateQuiz(id, dto);
+    }
+
+    @PatchMapping("/{id}/status/{status}")
+    public Quiz changeStatus(@PathVariable Integer id, @PathVariable QuizStatus status) {
+        return quizService.changeQuizStatus(id, status);
     }
 
     @DeleteMapping("/{id}")
