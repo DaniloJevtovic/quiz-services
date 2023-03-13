@@ -39,6 +39,7 @@ public class QuestionService {
     }
 
     public Question updateQuestion(Integer id, QuestionReqDTO dto) {
+        // provjeriti da li je kviz vec radjen
         Question question = getQuestionById(id);
         question.setQuestion(dto.question());
         question.setType(dto.type());
@@ -47,6 +48,7 @@ public class QuestionService {
     }
 
     public void deleteQuestion(Integer id) {
+        // provjera da li je kviz vec radjen
         questionRepository.deleteById(id);
     }
 }

@@ -33,6 +33,12 @@ public class QuizController {
         return quizService.getQuizziesForUser(userId);
     }
 
+    @GetMapping("/category/{catId}/status/{status}")
+    public Page<Quiz> getQuizziesForCategory(@PathVariable Integer catId, @PathVariable QuizStatus status,
+                                             Pageable pageable) {
+        return quizService.getQuizziesForCategoryAndStatus(catId, status, pageable);
+    }
+
     @PostMapping
     public Quiz createQuiz(@RequestBody QuizReqDTO dto) {
         return quizService.createQuiz(dto);

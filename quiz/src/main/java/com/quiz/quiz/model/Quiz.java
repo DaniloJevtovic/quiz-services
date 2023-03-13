@@ -22,7 +22,7 @@ public class Quiz {
     private Integer id;
 
     private String name;
-    private String description;
+    private String instructions;
     private Integer duration;
 
     @Enumerated(EnumType.STRING)
@@ -31,9 +31,10 @@ public class Quiz {
     private LocalDateTime created;
     private LocalDateTime lastUpdate;
     private Integer ownerId;
+    private Integer categoryId;
 
-    @JsonManagedReference
     @JsonIgnore
+    @JsonManagedReference
     @OneToMany(mappedBy = "quiz", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Question> questions = new ArrayList<>();
 }
