@@ -1,9 +1,9 @@
 package com.quiz.user.user;
 
+import com.quiz.user.dto.RegisterDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +24,7 @@ public class UserService {
         return userRepository.findById(id).orElse(null);
     }
 
-    public User saveUser(UserDTO dto) {
+    public User saveUser(RegisterDTO dto) {
         User user = new User();
         user.setName(dto.name());
         user.setEmail(dto.email());
@@ -33,6 +33,6 @@ public class UserService {
         user.setStatus(UserStatus.ACTIVE);
         user.setRegistrationDate(LocalDateTime.now());
 
-        return user;
+        return userRepository.save(user);
     }
 }
