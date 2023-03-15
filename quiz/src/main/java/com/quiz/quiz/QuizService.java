@@ -1,9 +1,9 @@
-package com.quiz.quiz.service;
+package com.quiz.quiz;
 
-import com.quiz.quiz.dto.QuizReqDTO;
-import com.quiz.quiz.model.Quiz;
-import com.quiz.quiz.model.QuizStatus;
-import com.quiz.quiz.repository.QuizRepository;
+import com.quiz.quiz.QuizReqDTO;
+import com.quiz.quiz.Quiz;
+import com.quiz.quiz.QuizStatus;
+import com.quiz.quiz.QuizRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -44,12 +44,18 @@ public class QuizService {
         quiz.setLastUpdate(LocalDateTime.now());
         quiz.setOwnerId(quizReqDTO.ownerId());
         quiz.setCategoryId(quizReqDTO.categoryId());
+        quiz.setNumOfSolves(0);
 
         return quizRepository.save(quiz);
     }
 
     public Quiz updateQuiz(Integer quizId, QuizReqDTO quizReqDTO) {
         Quiz quiz = getQuizById(quizId);
+
+        // provjera da li je kviz vec rjesavan (moze i nesto drugo - zahtjev moderatoro za izmjenu...)
+        if (quiz.getNumOfSolves() > 0)
+            return quiz;
+
         quiz.setName(quizReqDTO.name());
         quiz.setInstructions(quizReqDTO.instructions());
         quiz.setLastUpdate(LocalDateTime.now());
@@ -59,6 +65,15 @@ public class QuizService {
         return quizRepository.save(quiz);
     }
 
+    public Integer increaseNumOfSolves(Integer quizId) {
+        Quiz quiz = getQuizById(quizId);
+        int numOfSolves = quiz.getNumOfSolves();
+        quiz.setNumOfSolves(++numOfSolves);
+        quizRepository.save(quiz);
+
+        return numOfSolves;
+    }
+
     public Quiz changeQuizStatus(Integer quizId, QuizStatus quizStatus) {
         Quiz quiz = getQuizById(quizId);
         quiz.setStatus(quizStatus);
@@ -66,10 +81,13 @@ public class QuizService {
         return quiz;
     }
 
-
     public void deleteQuiz(Integer id) {
         quizRepository.deleteById(id);
         // provjeriti da li je kviz radjen, tj da li postoje rezulatati za njega
         // ako ne skroz ga obrisati, zajedno sa njegovim pitanjima
+    }
+
+    public Double deleteAllQuizesForCategory(Integer categoryId) {
+        return quizRepository.deleteByCategoryId(categoryId);
     }
 }

@@ -1,15 +1,11 @@
-package com.quiz.quiz.model;
+package com.quiz.quiz;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -32,9 +28,9 @@ public class Quiz {
     private LocalDateTime lastUpdate;
     private Integer ownerId;
     private Integer categoryId;
+    private int numOfSolves;
 
-    @JsonIgnore
-    @JsonManagedReference
-    @OneToMany(mappedBy = "quiz", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Question> questions = new ArrayList<>();
+    // private Double rating;   // rating / num of solves
+    // mozda poseban servis za rating (1-5 zvjezdica bez komentara (jer bi mogli da se pisu pitanja)
+
 }

@@ -1,9 +1,5 @@
-package com.quiz.quiz.controller;
+package com.quiz.quiz;
 
-import com.quiz.quiz.dto.QuizReqDTO;
-import com.quiz.quiz.model.Quiz;
-import com.quiz.quiz.model.QuizStatus;
-import com.quiz.quiz.service.QuizService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -54,8 +50,18 @@ public class QuizController {
         return quizService.changeQuizStatus(id, status);
     }
 
+    @PatchMapping("/{id}/increas-num-of-solves")
+    public Integer increaseNumOfSolver(@PathVariable Integer id) {
+        return quizService.increaseNumOfSolves(id);
+    }
+
     @DeleteMapping("/{id}")
     public void deleteQuiz(@PathVariable Integer id) {
         quizService.deleteQuiz(id);
+    }
+
+    @DeleteMapping("/category/{categoryId}")
+    public Double deleteAllQuiziesForCategory(@PathVariable Integer categoryId) {
+        return quizService.deleteAllQuizesForCategory(categoryId);
     }
 }

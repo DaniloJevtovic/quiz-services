@@ -1,4 +1,4 @@
-package com.quiz.quiz.model;
+package com.quiz.quiz;
 
 public enum QuizStatus {
     ACTIVE, INACTIVE, INVISIBLE, DELETED
