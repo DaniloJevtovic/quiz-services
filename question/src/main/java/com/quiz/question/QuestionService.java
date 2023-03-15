@@ -1,8 +1,5 @@
-package com.quiz.quiz.service;
+package com.quiz.question;
 
-import com.quiz.quiz.dto.QuestionReqDTO;
-import com.quiz.quiz.model.Question;
-import com.quiz.quiz.repository.QuestionRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,13 +12,12 @@ import java.util.List;
 public class QuestionService {
 
     private final QuestionRepository questionRepository;
-    private final QuizService quizService;
 
     public Page<Question> getAllQuestions(Pageable pageable) {
         return questionRepository.findAll(pageable);
     }
 
-    public Question getQuestionById(Integer id) {
+    public Question getQuestionById(String id) {
         return questionRepository.findById(id).orElse(null);
     }
 
@@ -29,26 +25,22 @@ public class QuestionService {
         return questionRepository.findByQuizId(quizId);
     }
 
-    public Question saveQuestion(QuestionReqDTO dto) {
-        Question question = new Question();
-        question.setQuestion(dto.question());
-        question.setQuiz(quizService.getQuizById(dto.quizId()));
-        question.setType(dto.type());
-
+    public Question saveQuestion(Question question) {
         return questionRepository.save(question);
     }
 
-    public Question updateQuestion(Integer id, QuestionReqDTO dto) {
+    public Question updateQuestion(Question question) {
         // provjeriti da li je kviz vec radjen
-        Question question = getQuestionById(id);
-        question.setQuestion(dto.question());
-        question.setType(dto.type());
-
-        return questionRepository.save(question);
+        return saveQuestion(question);
     }
 
-    public void deleteQuestion(Integer id) {
+    public void deleteQuestion(String id) {
         // provjera da li je kviz vec radjen
+        // brisanje svih ponudjenih odgovora za pitanje
         questionRepository.deleteById(id);
+    }
+
+    public Long deleteAllQuestionsForQuiz(Integer quizId) {
+        return questionRepository.deleteByQuizId(quizId);
     }
 }

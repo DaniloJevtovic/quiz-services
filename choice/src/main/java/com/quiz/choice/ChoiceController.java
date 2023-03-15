@@ -1,8 +1,5 @@
-package com.quiz.quiz.controller;
+package com.quiz.choice;
 
-import com.quiz.quiz.dto.ChoiceReqDTO;
-import com.quiz.quiz.model.Choice;
-import com.quiz.quiz.service.ChoiceService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,32 +20,37 @@ public class ChoiceController {
     }
 
     @GetMapping("/{id}")
-    public Choice getChoiceById(@PathVariable Integer id) {
+    public Choice getChoiceById(@PathVariable String id) {
         return choiceService.getChoiceById(id);
     }
 
     @GetMapping("/question/{questionId}")
-    public List<Choice> getAllChoicesForQuestion(@PathVariable Integer questionId) {
+    public List<Choice> getAllChoicesForQuestion(@PathVariable String questionId) {
         return choiceService.getAllChoicesForQuestion(questionId);
     }
 
     @GetMapping("/question/{questionId}/correct")
-    public List<Choice> getCorrectChoicesForQuestion(@PathVariable Integer questionId) {
+    public List<Choice> getCorrectChoicesForQuestion(@PathVariable String questionId) {
         return choiceService.getCorrectChoicesForQuestion(questionId);
     }
 
     @PostMapping
-    public Choice saveChoice(@RequestBody ChoiceReqDTO dto) {
-        return choiceService.saveChoice(dto);
+    public Choice saveChoice(@RequestBody Choice choice) {
+        return choiceService.saveChoice(choice);
     }
 
-    @PutMapping("/{id}")
-    public Choice updateChoice(@PathVariable Integer id, @RequestBody ChoiceReqDTO dto) {
-        return choiceService.updateChoice(id, dto);
+    @PutMapping
+    public Choice updateChoice(@RequestBody Choice choice) {
+        return choiceService.updateChoice(choice);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteChoice(@PathVariable Integer id) {
+    public void deleteChoice(@PathVariable String id) {
         choiceService.deleteChoice(id);
+    }
+
+    @DeleteMapping("/question/{questionId}")
+    public void deleteAllChoicesForQuestion(@PathVariable String questionId) {
+        choiceService.deleteAllCoicesForQuestion(questionId);
     }
 }

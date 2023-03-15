@@ -1,8 +1,5 @@
-package com.quiz.quiz.controller;
+package com.quiz.question;
 
-import com.quiz.quiz.dto.QuestionReqDTO;
-import com.quiz.quiz.model.Question;
-import com.quiz.quiz.service.QuestionService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,7 +20,7 @@ public class QuestionController {
     }
 
     @GetMapping("/{id}")
-    public Question getQuestionById(@PathVariable Integer id) {
+    public Question getQuestionById(@PathVariable String id) {
         return questionService.getQuestionById(id);
     }
 
@@ -33,17 +30,22 @@ public class QuestionController {
     }
 
     @PostMapping
-    public Question saveQuestion(@RequestBody QuestionReqDTO dto) {
-        return questionService.saveQuestion(dto);
+    public Question saveQuestion(@RequestBody Question question) {
+        return questionService.saveQuestion(question);
     }
 
-    @PutMapping("/{id}")
-    public Question updateQuestion(@PathVariable Integer id, @RequestBody QuestionReqDTO dto) {
-        return questionService.updateQuestion(id, dto);
+    @PutMapping
+    public Question updateQuestion(@RequestBody Question question) {
+        return questionService.updateQuestion(question);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteQuestion(@PathVariable Integer id) {
+    public void deleteQuestion(@PathVariable String id) {
         questionService.deleteQuestion(id);
+    }
+
+    @DeleteMapping("/quiz/{quizId}")
+    public Long deleteAllQuestionsForQuiz(@PathVariable Integer quizId) {
+        return questionService.deleteAllQuestionsForQuiz(quizId);
     }
 }

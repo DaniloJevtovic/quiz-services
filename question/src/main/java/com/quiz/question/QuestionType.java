@@ -1,4 +1,4 @@
-package com.quiz.quiz.model;
+package com.quiz.question;
 
 public enum QuestionType {
     TRUEFALSE, CHOICE, ANSWER
