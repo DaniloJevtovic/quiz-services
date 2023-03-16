@@ -1,5 +1,5 @@
 server:
-  port: 8086
+  port: 8084
 
 spring:
   application:
@@ -9,3 +9,13 @@ spring:
       port: 27017
       host: localhost
       database: question
+  rabbitmq:
+    addresses: localhost:5672
+
+rabbitmq:
+  exchanges:
+    del-quiz: del-quiz.exchange
+  queues:
+    del-quiz-questions-queue: del-quiz-questions.queue
+  routing-keys:
+    del-quiz-key: del-quiz.routing-key
