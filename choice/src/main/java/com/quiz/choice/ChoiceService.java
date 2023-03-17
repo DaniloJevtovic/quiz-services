@@ -1,6 +1,7 @@
 package com.quiz.choice;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -9,6 +10,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class ChoiceService {
 
     private final ChoiceRepository choiceRepository;
@@ -19,6 +21,10 @@ public class ChoiceService {
 
     public List<Choice> getAllChoicesForQuestion(String questionId) {
         return choiceRepository.findByQuestionId(questionId);
+    }
+
+    public List<Choice> getAllChoicesForQuiz(Integer guizId) {
+        return choiceRepository.findByQuizId(guizId);
     }
 
     public List<Choice> getCorrectChoicesForQuestion(String questionId) {
@@ -43,8 +49,13 @@ public class ChoiceService {
     }
 
     public Long deleteAllCoicesForQuestion(String questionId) {
-        return deleteAllCoicesForQuestion(questionId);
+        log.info("obrisani ponudjeni odgovori za pitanje");
+        return choiceRepository.deleteByQuestionId(questionId);
     }
 
+    public Long deleteAlChoicesForQuz(Integer quizId) {
+        log.info("obrisani ponudjeni odgovori za kviz");
+        return choiceRepository.deleteByQuizId(quizId);
+    }
 
 }

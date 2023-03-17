@@ -29,6 +29,11 @@ public class ChoiceController {
         return choiceService.getAllChoicesForQuestion(questionId);
     }
 
+    @GetMapping("/quiz/{quizId}")
+    public List<Choice> getAllChoicesForQuiz(@PathVariable Integer quizId) {
+        return choiceService.getAllChoicesForQuiz(quizId);
+    }
+
     @GetMapping("/question/{questionId}/correct")
     public List<Choice> getCorrectChoicesForQuestion(@PathVariable String questionId) {
         return choiceService.getCorrectChoicesForQuestion(questionId);
@@ -52,5 +57,10 @@ public class ChoiceController {
     @DeleteMapping("/question/{questionId}")
     public void deleteAllChoicesForQuestion(@PathVariable String questionId) {
         choiceService.deleteAllCoicesForQuestion(questionId);
+    }
+
+    @DeleteMapping("/quiz/{quizId}")
+    public void deleteAllChoicesForQuiz(@PathVariable Integer quizId) {
+        choiceService.deleteAlChoicesForQuz(quizId);
     }
 }

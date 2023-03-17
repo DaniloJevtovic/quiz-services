@@ -12,5 +12,10 @@ public interface ChoiceRepository extends MongoRepository<Choice, String> {
     // tacni izbori (odgovori) za pitanje
     List<Choice> findByQuestionIdAndCorrectTrue(String questionid);
 
+    // ponudjeni odgovori za kviz
+    List<Choice> findByQuizId(Integer quizId);
+
     Long deleteByQuestionId(String questionId);
+
+    Long deleteByQuizId(Integer quizId);
 }

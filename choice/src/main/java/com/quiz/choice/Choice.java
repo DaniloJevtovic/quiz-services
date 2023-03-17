@@ -14,4 +14,5 @@ public class Choice {
     private String choice;
     private Boolean correct;
     private String questionId;
+    private Integer quizId;
 }
