@@ -50,9 +50,14 @@ public class QuizController {
         return quizService.changeQuizStatus(id, status);
     }
 
-    @PatchMapping("/{id}/increas-num-of-solves")
+    @PatchMapping("/{id}/increase-num-of-solves")
     public Integer increaseNumOfSolver(@PathVariable Integer id) {
         return quizService.increaseNumOfSolves(id);
+    }
+
+    @PatchMapping("/{id}/approve")
+    public Quiz approveQuiz(@PathVariable Integer id) {
+        return quizService.approveQuiz(id);
     }
 
     @DeleteMapping("/{id}")

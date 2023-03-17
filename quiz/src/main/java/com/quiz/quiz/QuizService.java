@@ -1,9 +1,6 @@
 package com.quiz.quiz;
 
-import com.quiz.quiz.QuizReqDTO;
-import com.quiz.quiz.Quiz;
-import com.quiz.quiz.QuizStatus;
-import com.quiz.quiz.QuizRepository;
+import com.quiz.rabbitmq.RabbitMQMessageProducer;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,6 +14,7 @@ import java.util.List;
 public class QuizService {
 
     private final QuizRepository quizRepository;
+    private final RabbitMQMessageProducer rabbitMQMessageProducer;
 
     public Page<Quiz> getAll(Pageable pageable) {
         return quizRepository.findAll(pageable);
@@ -37,9 +35,10 @@ public class QuizService {
     public Quiz createQuiz(QuizReqDTO quizReqDTO) {
         Quiz quiz = new Quiz();
         quiz.setName(quizReqDTO.name());
+        quiz.setDescription(quizReqDTO.description());
         quiz.setInstructions(quizReqDTO.instructions());
         quiz.setDuration(quizReqDTO.duration());
-        quiz.setStatus(QuizStatus.INACTIVE);
+        quiz.setStatus(QuizStatus.WAITING_APPROVAL);
         quiz.setCreated(LocalDateTime.now());
         quiz.setLastUpdate(LocalDateTime.now());
         quiz.setOwnerId(quizReqDTO.ownerId());
@@ -57,6 +56,7 @@ public class QuizService {
             return quiz;
 
         quiz.setName(quizReqDTO.name());
+        quiz.setDescription(quizReqDTO.description());
         quiz.setInstructions(quizReqDTO.instructions());
         quiz.setLastUpdate(LocalDateTime.now());
         quiz.setDuration(quizReqDTO.duration());
@@ -67,6 +67,9 @@ public class QuizService {
 
     public Integer increaseNumOfSolves(Integer quizId) {
         Quiz quiz = getQuizById(quizId);
+
+        if (quiz == null) return -1;
+
         int numOfSolves = quiz.getNumOfSolves();
         quiz.setNumOfSolves(++numOfSolves);
         quizRepository.save(quiz);
@@ -74,6 +77,7 @@ public class QuizService {
         return numOfSolves;
     }
 
+    // user (active, inactive)
     public Quiz changeQuizStatus(Integer quizId, QuizStatus quizStatus) {
         Quiz quiz = getQuizById(quizId);
         quiz.setStatus(quizStatus);
@@ -81,10 +85,25 @@ public class QuizService {
         return quiz;
     }
 
+    // moderator
+    public Quiz approveQuiz(Integer quizId) {
+        return changeQuizStatus(quizId, QuizStatus.ACTIVE);
+        // posalji notifikaciju
+    }
+
     public void deleteQuiz(Integer id) {
-        quizRepository.deleteById(id);
+        Quiz quiz = getQuizById(id);
+
         // provjeriti da li je kviz radjen, tj da li postoje rezulatati za njega
-        // ako ne skroz ga obrisati, zajedno sa njegovim pitanjima
+        if (quiz.getNumOfSolves() > 0) {
+            quiz.setStatus(QuizStatus.DELETED);
+            quizRepository.save(quiz);
+            return;
+        }
+
+        // poziv servisa za brisanje pitanja
+        rabbitMQMessageProducer.publish(id, "del-quiz.exchange", "del-quiz.routing-key");
+        quizRepository.deleteById(id);
     }
 
     public Double deleteAllQuizesForCategory(Integer categoryId) {
