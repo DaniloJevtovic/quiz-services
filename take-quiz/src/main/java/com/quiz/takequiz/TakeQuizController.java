@@ -24,6 +24,11 @@ public class TakeQuizController {
         return takeQuizService.getSolvedQuizById(id);
     }
 
+    @GetMapping("/{id}/checkSolved")
+    public Boolean checkQuizSolved(@PathVariable Integer id) {
+        return takeQuizService.checkQuizSolved(id);
+    }
+
     @GetMapping("/user/{userId}")
     public Page<TakeQuiz> getSolvedQuiziesForUser(@PathVariable Integer userId, Pageable pageable) {
         return takeQuizService.getSolvedQuiziesForUser(userId, pageable);

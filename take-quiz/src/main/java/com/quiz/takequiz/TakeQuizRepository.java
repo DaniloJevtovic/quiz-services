@@ -11,4 +11,11 @@ public interface TakeQuizRepository extends JpaRepository<TakeQuiz, Integer> {
 
     // lista rezultata za kviz
     Page<TakeQuiz> findByQuizId(Integer quizId, Pageable pageable);
+
+    TakeQuiz findByQuizIdAndSolverId(Integer quizId, Integer solverId);
+
+    // da li postoji rezultata za kviz i korisnika
+    boolean existsByQuizIdAndSolverId(Integer quizId, Integer solverId);
+
+    boolean existsByQuizId(Integer quizId);   // da li postoje rezultati za kviz
 }
