@@ -1,7 +1,5 @@
 package com.quiz.quiz;
 
-import com.quiz.quiz.Quiz;
-import com.quiz.quiz.QuizStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

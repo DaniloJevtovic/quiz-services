@@ -1,0 +1,2 @@
+insert into quiz (name, description, instructions, duration, status, created, last_update, owner_id, category_id, num_of_solves) values ('kviz', 'opis kviza', 'instrukcije za rjesavanje', 15, 'ACTIVE', NOW(), NOW(), 3, 1, 0);
+insert into quiz (name, description, instructions, duration, status, created, last_update, owner_id, category_id, num_of_solves) values ('kviz2', 'opis kviza 2', 'instrukcije za rjesavanje 2', 20, 'ACTIVE', NOW(), NOW(), 3, 1, 0);

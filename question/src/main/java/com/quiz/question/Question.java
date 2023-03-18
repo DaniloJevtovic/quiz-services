@@ -12,5 +12,8 @@ public class Question {
     private String id;
     private String question;
     private QuestionType type;
+    private Double points;
+    // za choice broj poena se dijeli sa brojem ponudjenih odgovora
+
     private Integer quizId;
 }

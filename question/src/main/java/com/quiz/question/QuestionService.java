@@ -1,6 +1,7 @@
 package com.quiz.question;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -9,6 +10,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class QuestionService {
 
     private final QuestionRepository questionRepository;
@@ -41,6 +43,7 @@ public class QuestionService {
     }
 
     public Long deleteAllQuestionsForQuiz(Integer quizId) {
+        log.info("obrisane sva pitanja za kviz");
         return questionRepository.deleteByQuizId(quizId);
     }
 }
