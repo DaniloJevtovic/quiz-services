@@ -1,5 +1,6 @@
 package com.quiz.quiz;
 
+import com.quiz.clients.notification.NotificationDTO;
 import com.quiz.rabbitmq.RabbitMQMessageProducer;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -87,8 +88,21 @@ public class QuizService {
 
     // moderator
     public Quiz approveQuiz(Integer quizId) {
-        return changeQuizStatus(quizId, QuizStatus.ACTIVE);
-        // posalji notifikaciju
+        Quiz quiz = getQuizById(quizId);
+        quiz.setStatus(QuizStatus.ACTIVE);
+
+        rabbitMQMessageProducer.publish(
+                new NotificationDTO("Vas kviz: " + quiz.getName() + " je odobren!", quiz.getOwnerId()),
+                "notification.exchange",
+                "notification.routing-key"
+        );
+
+        return quizRepository.save(quiz);
+    }
+
+    public boolean checkQuizSolved(Integer quizId) {
+        Quiz quiz = getQuizById(quizId);
+        return quiz.getNumOfSolves() == 0;
     }
 
     public void deleteQuiz(Integer id) {

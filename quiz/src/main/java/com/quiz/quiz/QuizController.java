@@ -29,6 +29,11 @@ public class QuizController {
         return quizService.getQuizziesForUser(userId);
     }
 
+    @GetMapping("/checkSolved/{quizId}")
+    public Boolean checkSolved(@PathVariable Integer quizId) {
+        return quizService.checkQuizSolved(quizId);
+    }
+
     @GetMapping("/category/{catId}/status/{status}")
     public Page<Quiz> getQuizziesForCategory(@PathVariable Integer catId, @PathVariable QuizStatus status,
                                              Pageable pageable) {
