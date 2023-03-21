@@ -9,3 +9,13 @@ spring:
       port: 27017
       host: localhost
       database: notification
+  rabbitmq:
+    addresses: localhost:5672
+
+rabbitmq:
+  exchanges:
+    notification: notification.exchange
+  queues:
+    notification-queue: notification.queue
+  routing-keys:
+    notification-key: notification.routing-key

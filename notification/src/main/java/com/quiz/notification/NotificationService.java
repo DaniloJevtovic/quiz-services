@@ -1,6 +1,7 @@
 package com.quiz.notification;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class NotificationService {
 
     private final NotificationRepository notificationRepository;
@@ -31,6 +33,7 @@ public class NotificationService {
     }
 
     public Notification save(NotificationDTO dto) {
+        log.info("notifikacija poslata");
         Notification notification = new Notification();
         notification.setNotification(dto.notification());
         notification.setReciverId(dto.reciverId());
