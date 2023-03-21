@@ -1,5 +1,6 @@
 package com.quiz.takequiz;
 
+import com.quiz.clients.notification.NotificationDTO;
 import com.quiz.rabbitmq.RabbitMQMessageProducer;
 import com.quiz.takequiz.dto.TakeQuizReqDTO;
 import com.quiz.takequiz.dto.UpdateSolvedQuiz;
@@ -53,6 +54,12 @@ public class TakeQuizService {
 
         // poziv ms za povecavanje broja rjesavanja u kvizu
         rabbitMQMessageProducer.publish(dto.quizId(), "solves.exchange", "solves.routing-key");
+        // notifikacija vlasniku kviza da mu je kviz rjesavan
+        rabbitMQMessageProducer.publish(
+                new NotificationDTO("Vas kviz: " + dto.quizName() + " je rjesavan!", dto.ownerId()),
+                "notification.exchange",
+                "notification.routing-key"
+        );
 
         return takeQuizRepository.save(takeQuiz);
     }
