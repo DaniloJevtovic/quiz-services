@@ -108,7 +108,6 @@ public class QuizService {
     public void deleteQuiz(Integer id) {
         Quiz quiz = getQuizById(id);
 
-        // provjeriti da li je kviz radjen, tj da li postoje rezulatati za njega
         if (quiz.getNumOfSolves() > 0) {
             quiz.setStatus(QuizStatus.DELETED);
             quizRepository.save(quiz);
@@ -118,6 +117,14 @@ public class QuizService {
         // poziv servisa za brisanje pitanja
         rabbitMQMessageProducer.publish(id, "del-quiz.exchange", "del-quiz.routing-key");
         quizRepository.deleteById(id);
+    }
+
+    public List<Quiz> searchAllQuizzesByNameForCategory(Integer catId, String name) {
+        return quizRepository.findByCategoryIdAndNameContains(catId, name);
+    }
+
+    public List<Quiz> searchQuizzesByNameCategoryAndStatus(Integer catId, QuizStatus status, String name) {
+        return quizRepository.findByCategoryIdAndStatusAndNameContains(catId, status, name);
     }
 
     public Double deleteAllQuizesForCategory(Integer categoryId) {

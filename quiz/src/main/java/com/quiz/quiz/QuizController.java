@@ -40,6 +40,17 @@ public class QuizController {
         return quizService.getQuizziesForCategoryAndStatus(catId, status, pageable);
     }
 
+    @GetMapping("/search/category/{catId}/name/{name}")
+    public List<Quiz> searchAllQuizzesInCategory(@PathVariable Integer catId, @PathVariable String name) {
+        return quizService.searchAllQuizzesByNameForCategory(catId, name);
+    }
+
+    @GetMapping("/search/category/{catId}/name/{name}/status")
+    public List<Quiz> searchAllQuizzesInCategoryByStatus(@PathVariable Integer catId, @PathVariable QuizStatus status,
+                                                         @PathVariable String name) {
+        return quizService.searchQuizzesByNameCategoryAndStatus(catId, status, name);
+    }
+
     @PostMapping
     public Quiz createQuiz(@RequestBody QuizReqDTO dto) {
         return quizService.createQuiz(dto);

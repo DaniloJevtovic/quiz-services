@@ -12,5 +12,9 @@ public interface QuizRepository extends JpaRepository<Quiz, Integer> {
 
     Page<Quiz> findByCategoryIdAndStatus(Integer categoryId, QuizStatus status, Pageable pageable);
 
+    List<Quiz> findByCategoryIdAndNameContains(Integer catId, String name);
+
+    List<Quiz> findByCategoryIdAndStatusAndNameContains(Integer catId, QuizStatus status, String name);
+
     Double deleteByCategoryId(Integer categoryId);
 }
