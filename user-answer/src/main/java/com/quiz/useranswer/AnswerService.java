@@ -21,8 +21,12 @@ public class AnswerService {
         return answerRepository.findById(id).orElse(null);
     }
 
-    public List<Answer> getAnswersForQuestionAndSolver(Integer questionId, Integer solverId) {
+    public List<Answer> getAnswersForQuestionAndSolver(String questionId, Integer solverId) {
         return answerRepository.findByQuestionIdAndSolverId(questionId, solverId);
+    }
+
+    public List<Answer> getAnswersForQuestionSolverAndType(String questionId, Integer solverId, AnswerType type) {
+        return answerRepository.findByQuestionIdAndSolverIdAndType(questionId, solverId, type);
     }
 
     public List<Answer> getAnswersForResult(Integer resultId) {
@@ -33,10 +37,24 @@ public class AnswerService {
         return answerRepository.save(answer);
     }
 
+    // metoda racuna ukupan rezultat za citav kviz (rezultat)
+    // moze kad se pritisne dugme finish ili istekne vrijeme
+    public Double calculateScoreForSolvedQuiz(Integer resultId) {
+        // pozvati servis za update rezultata
+        return getAnswersForResult(resultId).stream().mapToDouble(a -> a.getPoints()).sum();
+    }
+
+    // racuna rezultat za pitanje
+    public Double calculateScoreForQuestion(String questionId, Integer solverId) {
+        return getAnswersForQuestionAndSolver(questionId, solverId)
+                .stream().mapToDouble(ans -> ans.getPoints()).sum();
+    }
+
     // vlasnik kviza oznacava da li je odgovor tacan ili netacan
-    public Answer setCorrect(String answerId, Boolean correct) {
-        Answer answer = getAnswerById(answerId);
-        answer.setCorrect(correct);
+    public Answer setCorrect(SetAnsCorrectDTO dto) {
+        Answer answer = getAnswerById(dto.answerId());
+        answer.setCorrect(dto.correct());
+        answer.setPoints(dto.points());
         return answerRepository.save(answer);
     }
 

@@ -26,8 +26,14 @@ public class AnswerController {
     }
 
     @GetMapping("/question/{questionId}/solver/{solverId}")
-    public List<Answer> getAnswersForQuestionAndSolver(@PathVariable Integer questionId, @PathVariable Integer solverId) {
+    public List<Answer> getAnswersForQuestionAndSolver(@PathVariable String questionId, @PathVariable Integer solverId) {
         return answerService.getAnswersForQuestionAndSolver(questionId, solverId);
+    }
+
+    @GetMapping("/question/{questionId}/solver/{solverId}/type/{type}")
+    public List<Answer> getAnswersForQuestionSolverAndType(
+            @PathVariable String questionId, @PathVariable Integer solverId, @PathVariable AnswerType type) {
+        return answerService.getAnswersForQuestionSolverAndType(questionId, solverId, type);
     }
 
     @GetMapping("/result/{resultId}")
@@ -40,9 +46,19 @@ public class AnswerController {
         return answerService.saveAnswer(answer);
     }
 
-    @PutMapping("/{id}/correct/{correct}")
-    public Answer updateCorrect(@PathVariable String id, @PathVariable Boolean correct) {
-        return answerService.setCorrect(id, correct);
+    @GetMapping("/solvedQuiz/{id}/calculateScore")
+    public Double calculateScoreForSolvedQuiz(@PathVariable Integer resultId) {
+        return calculateScoreForSolvedQuiz(resultId);
+    }
+
+    @GetMapping("/question/{questionId}/calculateScore/solver/{solverId}")
+    public Double calculateScoreForQuestion(@PathVariable String questionId, Integer solverId) {
+        return calculateScoreForQuestion(questionId, solverId);
+    }
+
+    @PutMapping("/setCorrect")
+    public Answer updateCorrect(@RequestBody SetAnsCorrectDTO ansCorrectDTO) {
+        return answerService.setCorrect(ansCorrectDTO);
     }
 
     @DeleteMapping("/{id}")
