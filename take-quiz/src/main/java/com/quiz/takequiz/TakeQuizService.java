@@ -26,57 +26,59 @@ public class TakeQuizService {
         return takeQuizRepository.findById(id).orElse(null);
     }
 
-    public TakeQuiz getByQuizAndSolver(Integer quizId, Integer solverId) {
+    public TakeQuiz getResultForQuizAndSolver(Integer quizId, Integer solverId) {
         return takeQuizRepository.findByQuizIdAndSolverId(quizId, solverId);
     }
 
-    public Page<TakeQuiz> getSolvedQuiziesForUser(Integer userId, Pageable pageable) {
+    public Page<TakeQuiz> getSolvedQuizesForUser(Integer userId, Pageable pageable) {
         return takeQuizRepository.findBySolverId(userId, pageable);
     }
 
-    public Page<TakeQuiz> getSolvedQuiziesForQuiz(Integer quizId, Pageable pageable) {
+    public Page<TakeQuiz> getResultsForQuiz(Integer quizId, Pageable pageable) {
         return takeQuizRepository.findByQuizId(quizId, pageable);
     }
 
+    // start quiz
     public TakeQuiz takeQuiz(TakeQuizReqDTO dto) {
-        // provjera da li je korisnik vec rjesavao kviz
-        TakeQuiz checkResult = getByQuizAndSolver(dto.quizId(), dto.solverId());
+        TakeQuiz checkResult = getResultForQuizAndSolver(dto.quizId(), dto.solverId());
 
         if (checkResult != null) return checkResult;
 
         TakeQuiz takeQuiz = new TakeQuiz();
         takeQuiz.setQuizName(dto.quizName());
         takeQuiz.setQuizId(dto.quizId());
+        takeQuiz.setQuizOwnerId(dto.ownerId());
         takeQuiz.setDurationOfSolving(0);
         takeQuiz.setResult(0.0);
         takeQuiz.setDateOfSolving(LocalDateTime.now());
         takeQuiz.setSolverId(dto.solverId());
 
-        // poziv ms za povecavanje broja rjesavanja u kvizu
-        rabbitMQMessageProducer.publish(dto.quizId(), "solves.exchange", "solves.routing-key");
-        // notifikacija vlasniku kviza da mu je kviz rjesavan
-        rabbitMQMessageProducer.publish(
-                new NotificationDTO("Vas kviz: " + dto.quizName() + " je rjesavan!", dto.ownerId()),
-                "notification.exchange",
-                "notification.routing-key"
-        );
-
         return takeQuizRepository.save(takeQuiz);
     }
 
     // kad se pritisne dugme finish ili istekne vrijeme uraditi update rezultata
-    // ili svaki put kad se sacuva odgovor update rezultata?
-    public TakeQuiz updateSolvedQuiz(Integer takeQuizId, UpdateSolvedQuiz dto) {
+    public TakeQuiz finishSolving(Integer takeQuizId, UpdateSolvedQuiz dto) {
         TakeQuiz solvedQuiz = getSolvedQuizById(takeQuizId);
-        solvedQuiz.setResult(dto.result());
+        solvedQuiz.setResult(dto.result()); // pozvati iz drugog servisa
         solvedQuiz.setDurationOfSolving(dto.durationOfSolving());
+
+        // poziv ms za povecavanje broja rjesavanja u kvizu
+        rabbitMQMessageProducer.publish(solvedQuiz.getQuizId(), "solves.exchange", "solves.routing-key");
+        // notifikacija vlasniku kviza da mu je kviz rjesavan
+        rabbitMQMessageProducer.publish(
+                new NotificationDTO(
+                        "Vas kviz: " + solvedQuiz.getQuizName() + " je rjesavan!", solvedQuiz.getQuizOwnerId()),
+                "notification.exchange",
+                "notification.routing-key"
+        );
 
         return takeQuizRepository.save(solvedQuiz);
     }
 
+    // dodavanje ili oduzimanje poena (+ dodavanje, - oduzimanje)
     public void updatePoints(Integer id, Double points) {
         TakeQuiz solvedQuiz = getSolvedQuizById(id);
-        solvedQuiz.setResult(points);
+        solvedQuiz.setResult(solvedQuiz.getResult() + points);
         takeQuizRepository.save(solvedQuiz);
     }
 

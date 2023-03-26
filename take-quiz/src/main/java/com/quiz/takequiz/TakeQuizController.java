@@ -30,13 +30,13 @@ public class TakeQuizController {
     }
 
     @GetMapping("/user/{userId}")
-    public Page<TakeQuiz> getSolvedQuiziesForUser(@PathVariable Integer userId, Pageable pageable) {
-        return takeQuizService.getSolvedQuiziesForUser(userId, pageable);
+    public Page<TakeQuiz> getSolvedQuizesForUser(@PathVariable Integer userId, Pageable pageable) {
+        return takeQuizService.getSolvedQuizesForUser(userId, pageable);
     }
 
     @GetMapping("/quiz/{quizId}")
-    public Page<TakeQuiz> getAllSolvedQuiziesForQuiz(@PathVariable Integer quizId, Pageable pageable) {
-        return takeQuizService.getSolvedQuiziesForQuiz(quizId, pageable);
+    public Page<TakeQuiz> getAllResultsForQuiz(@PathVariable Integer quizId, Pageable pageable) {
+        return takeQuizService.getResultsForQuiz(quizId, pageable);
     }
 
     @PostMapping
@@ -45,8 +45,8 @@ public class TakeQuizController {
     }
 
     @PutMapping("/{id}")
-    public TakeQuiz updateSolveQuiz(@PathVariable Integer id, @RequestBody UpdateSolvedQuiz dto) {
-        return takeQuizService.updateSolvedQuiz(id, dto);
+    public TakeQuiz finishQuiz(@PathVariable Integer id, @RequestBody UpdateSolvedQuiz dto) {
+        return takeQuizService.finishSolving(id, dto);
     }
 
     @DeleteMapping("/{id}")
