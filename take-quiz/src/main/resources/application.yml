@@ -15,3 +15,13 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5Dialect
+  rabbitmq:
+    addresses: localhost:5672
+
+rabbitmq:
+  exchanges:
+    results: results.exchange
+  queues:
+    results-queue: results.queue
+  routing-keys:
+    results-key: results.routing-key
