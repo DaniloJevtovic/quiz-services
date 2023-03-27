@@ -1,5 +1,5 @@
 package com.quiz.quiz;
 
 public enum QuizStatus {
-    ACTIVE, INACTIVE, WAITING_APPROVAL, DELETED
+    ACTIVE, INACTIVE, PRIVATE, WAITING_APPROVAL, DELETED
 }

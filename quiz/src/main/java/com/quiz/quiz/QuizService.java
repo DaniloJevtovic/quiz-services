@@ -78,7 +78,7 @@ public class QuizService {
         return numOfSolves;
     }
 
-    // user (active, inactive)
+    // user (active, inactive, deleted)
     public Quiz changeQuizStatus(Integer quizId, QuizStatus quizStatus) {
         Quiz quiz = getQuizById(quizId);
         quiz.setStatus(quizStatus);
@@ -86,7 +86,7 @@ public class QuizService {
         return quiz;
     }
 
-    // moderator
+    // moderator (active)
     public Quiz approveQuiz(Integer quizId) {
         Quiz quiz = getQuizById(quizId);
         quiz.setStatus(QuizStatus.ACTIVE);

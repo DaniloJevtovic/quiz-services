@@ -18,8 +18,8 @@ public class Quiz {
     private Integer id;
 
     private String name;
-    private String description; // opis o cemu je kviz...
-    private String instructions;    // instrukcije za rjesavanje - kad se pokrene kviz
+    private String description;
+    private String instructions;
     private Integer duration;
 
     @Enumerated(EnumType.STRING)
@@ -31,7 +31,8 @@ public class Quiz {
     private Integer categoryId;
     private int numOfSolves;
 
-    // privatni/javni
+    // private/public quiz - enum
+    // private QuizType type;
 
     // private Double rating;   // rating / num of solves
     // mozda poseban servis za rating (1-5 zvjezdica bez komentara (jer bi mogli da se pisu pitanja)

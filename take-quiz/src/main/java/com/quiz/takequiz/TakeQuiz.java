@@ -23,6 +23,7 @@ public class TakeQuiz {
 
     private String quizName;    // VODI RACUNA AKO SE PROMJENI NAZIV KVIZA!
     private Integer quizId;
+    private Integer quizOwnerId;
 
     private Double result;  // points
     private Integer durationOfSolving;
