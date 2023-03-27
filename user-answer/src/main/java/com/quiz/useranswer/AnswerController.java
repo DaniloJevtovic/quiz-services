@@ -48,12 +48,12 @@ public class AnswerController {
 
     @GetMapping("/solvedQuiz/{id}/calculateScore")
     public Double calculateScoreForSolvedQuiz(@PathVariable Integer resultId) {
-        return calculateScoreForSolvedQuiz(resultId);
+        return answerService.calculateScoreForSolvedQuiz(resultId);
     }
 
     @GetMapping("/question/{questionId}/calculateScore/solver/{solverId}")
     public Double calculateScoreForQuestion(@PathVariable String questionId, Integer solverId) {
-        return calculateScoreForQuestion(questionId, solverId);
+        return answerService.calculateScoreForQuestion(questionId, solverId);
     }
 
     @PutMapping("/setCorrect")
