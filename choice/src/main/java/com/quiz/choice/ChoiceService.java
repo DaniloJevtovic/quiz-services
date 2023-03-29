@@ -44,6 +44,12 @@ public class ChoiceService {
         return choiceRepository.save(choice);
     }
 
+    // provjera da li je izbor tacan ili ne -- kad se zavrsi kviz
+    // moze i poseban servis da se napravi za ovu provjeru(choiceId, correct)
+    public boolean checkChoice(String choiceId) {
+        return getChoiceById(choiceId).getCorrect();
+    }
+
     public void deleteChoice(String id) {
         choiceRepository.deleteById(id);
     }

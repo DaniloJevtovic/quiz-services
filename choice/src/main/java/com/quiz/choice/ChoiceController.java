@@ -24,6 +24,11 @@ public class ChoiceController {
         return choiceService.getChoiceById(id);
     }
 
+    @GetMapping("/checkChoice/{id}")
+    public Boolean checkChoice(@PathVariable String id) {
+        return choiceService.checkChoice(id);
+    }
+
     @GetMapping("/question/{questionId}")
     public List<Choice> getAllChoicesForQuestion(@PathVariable String questionId) {
         return choiceService.getAllChoicesForQuestion(questionId);
