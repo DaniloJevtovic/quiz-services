@@ -3,9 +3,11 @@ server:
 
 spring:
   application:
-    name: answer
+    name: user-answer
   data:
     mongodb:
       port: 27017
       host: localhost
       database: answer
+  rabbitmq:
+    addresses: localhost:5672
