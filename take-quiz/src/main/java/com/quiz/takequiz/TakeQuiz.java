@@ -24,8 +24,9 @@ public class TakeQuiz {
     private String quizName;    // VODI RACUNA AKO SE PROMJENI NAZIV KVIZA!
     private Integer quizId;
     private Integer quizOwnerId;
+    // private double quizPoints; // ukupan broj poena koliko je moguce ostvariti na kvizu
 
-    private Double result;  // points
+    private Double result;  // points, total score
     private Integer durationOfSolving;
 
     @JsonFormat(pattern = "dd.MM.yyyy / HH:mm:ss", timezone = "Europe/Belgrade")
@@ -33,4 +34,6 @@ public class TakeQuiz {
 
     private Integer solverId;
 
+    // private boolean graded; // kad vlasnik oznaci da je kviz ocjenjene (pregleda sve odogovre na dopisivanje)
+    // mozda umjesto graded ubaciti neki status rezultata
 }
