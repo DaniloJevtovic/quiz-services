@@ -30,13 +30,13 @@ public class AnswerController {
         return answerService.getAnswersForResult(resultId);
     }
 
-    @GetMapping("/result/{resultId}/question/{questionId}")
-    public List<Answer> getAnswersForResultAndQuestion(@PathVariable Integer resultId, @PathVariable String questionId) {
-        return answerService.getAnswersForResultAndQuestion(resultId, questionId);
+    @GetMapping("/question/{questionId}")
+    public List<Answer> getAnswersForResultAndQuestion(@PathVariable String questionId) {
+        return answerService.getAnswersForQuestion(questionId);
     }
 
     @PostMapping
-    public Answer saveAnswer(@RequestBody Answer answer) {
+    public Answer writeAnswer(@RequestBody Answer answer) {
         return answerService.saveAnswer(answer);
     }
 
@@ -45,14 +45,9 @@ public class AnswerController {
         return answerService.calculateScoreForSolvedQuiz(resultId);
     }
 
-    @GetMapping("/result/{resId}/question/{questionId}/calculateScore")
-    public Double calculateScoreForQuestion(@PathVariable Integer resId, @PathVariable String questionId) {
-        return answerService.calculateScoreForQuestion(resId, questionId);
-    }
-
-        @GetMapping("/result/{resId}/checkChosenAnswers")
-    public Double checkChosenAnswers(@PathVariable Integer resId) {
-        return answerService.checkChosenAnswersForResult(resId);
+    @GetMapping("/uestion/{questionId}/calculateScore")
+    public Double calculateScoreForQuestion(@PathVariable String questionId) {
+        return answerService.calculateScoreForQuestion(questionId);
     }
 
     @PutMapping("/setCorrect")
