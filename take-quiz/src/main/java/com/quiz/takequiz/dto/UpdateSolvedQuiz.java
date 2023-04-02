@@ -1,4 +1,6 @@
 package com.quiz.takequiz.dto;
 
-public record UpdateSolvedQuiz(Double result, Integer durationOfSolving) {
+import com.quiz.takequiz.ResultStatus;
+
+public record UpdateSolvedQuiz(Double result, Integer durationOfSolving, ResultStatus status) {
 }

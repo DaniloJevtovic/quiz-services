@@ -49,6 +49,11 @@ public class TakeQuizController {
         return takeQuizService.finishSolving(id, dto);
     }
 
+    @PutMapping("/{id}/status/{status}")
+    public TakeQuiz updateResultStatus(@PathVariable Integer id, @PathVariable ResultStatus status) {
+        return takeQuizService.updateResultStatus(id, status);
+    }
+
     @DeleteMapping("/{id}")
     public void deleteSolvedQuiz(@PathVariable Integer id) {
         takeQuizService.deleteSolvedQuiz(id);

@@ -1,5 +1,6 @@
 package com.quiz.takequiz;
 
+import com.quiz.clients.answer.AnswerClient;
 import com.quiz.clients.notification.NotificationDTO;
 import com.quiz.rabbitmq.RabbitMQMessageProducer;
 import com.quiz.takequiz.dto.TakeQuizReqDTO;
@@ -17,6 +18,7 @@ public class TakeQuizService {
 
     private final TakeQuizRepository takeQuizRepository;
     private final RabbitMQMessageProducer rabbitMQMessageProducer;
+    private final AnswerClient answerClient;
 
     public Page<TakeQuiz> getAll(Pageable pageable) {
         return takeQuizRepository.findAll(pageable);
@@ -59,8 +61,10 @@ public class TakeQuizService {
     // kad se pritisne dugme finish ili istekne vrijeme uraditi update rezultata
     public TakeQuiz finishSolving(Integer takeQuizId, UpdateSolvedQuiz dto) {
         TakeQuiz solvedQuiz = getSolvedQuizById(takeQuizId);
-        solvedQuiz.setResult(dto.result()); // pozvati iz drugog servisa
+
+        solvedQuiz.setResult(answerClient.calculateScoreForSolvedQuiz(takeQuizId)); // poziv answer servisa
         solvedQuiz.setDurationOfSolving(dto.durationOfSolving());
+        solvedQuiz.setResultStatus(dto.status());   // na frontu provjeriti da li kviz ima samo ponudjene odgovore
 
         // poziv ms za povecavanje broja rjesavanja u kvizu
         rabbitMQMessageProducer.publish(solvedQuiz.getQuizId(), "solves.exchange", "solves.routing-key");
@@ -72,6 +76,7 @@ public class TakeQuizService {
                 "notification.routing-key"
         );
 
+
         return takeQuizRepository.save(solvedQuiz);
     }
 
@@ -80,6 +85,13 @@ public class TakeQuizService {
         TakeQuiz solvedQuiz = getSolvedQuizById(id);
         solvedQuiz.setResult(solvedQuiz.getResult() + points);
         takeQuizRepository.save(solvedQuiz);
+    }
+
+    // kad vlasnik kviza pregleda sve odgovore - oznaciti kao ocjenjene
+    public TakeQuiz updateResultStatus(Integer resId, ResultStatus status) {
+        TakeQuiz result = getSolvedQuizById(resId);
+        result.setResultStatus(status);
+        return result;
     }
 
     private boolean checkSolvesForQuizAndUser(Integer quizId, Integer solverId) {
