@@ -1,10 +1,7 @@
 package com.quiz.takequiz;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -32,8 +29,8 @@ public class TakeQuiz {
     @JsonFormat(pattern = "dd.MM.yyyy / HH:mm:ss", timezone = "Europe/Belgrade")
     private LocalDateTime dateOfSolving;
 
-    private Integer solverId;
+    @Enumerated(EnumType.STRING)
+    private ResultStatus resultStatus;
 
-    // private boolean graded; // kad vlasnik oznaci da je kviz ocjenjene (pregleda sve odogovre na dopisivanje)
-    // mozda umjesto graded ubaciti neki status rezultata
+    private Integer solverId;
 }
