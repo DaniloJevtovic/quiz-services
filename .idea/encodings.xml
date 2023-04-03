@@ -1,10 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/api-gateway/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/api-gateway/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/choice/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/choice/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/clients/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/clients/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/eureka-server/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/eureka-server/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/notification/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/notification/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/question/choice/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/question/choice/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/question/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/question/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/quiz-category/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/quiz-category/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/quiz/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/quiz/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/rabbitmq/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/rabbitmq/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/take-quiz/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/take-quiz/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/user-answer/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/user-answer/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/user-select-answer/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/user-select-answer/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/user/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/user/src/main/resources" charset="UTF-8" />
   </component>

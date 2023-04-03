@@ -8,6 +8,17 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="quiz" />
+        <module name="clients" />
+        <module name="question" />
+        <module name="quiz-category" />
+        <module name="user-answer" />
+        <module name="take-quiz" />
+        <module name="eureka-server" />
+        <module name="rabbitmq" />
+        <module name="user-select-answer" />
+        <module name="notification" />
+        <module name="api-gateway" />
+        <module name="choice" />
         <module name="user" />
       </profile>
     </annotationProcessing>

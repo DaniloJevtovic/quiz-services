@@ -10,6 +10,17 @@
     <modules>
         <module>user</module>
         <module>quiz</module>
+        <module>quiz-category</module>
+        <module>take-quiz</module>
+        <module>user-answer</module>
+        <module>notification</module>
+        <module>eureka-server</module>
+        <module>api-gateway</module>
+        <module>question</module>
+        <module>choice</module>
+        <module>rabbitmq</module>
+        <module>clients</module>
+        <module>user-select-answer</module>
     </modules>
     <packaging>pom</packaging>
     <name>quiz-services</name>
@@ -54,6 +65,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <version>3.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
     </dependencies>
 
