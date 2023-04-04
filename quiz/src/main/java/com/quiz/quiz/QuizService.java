@@ -63,6 +63,8 @@ public class QuizService {
         quiz.setDuration(quizReqDTO.duration());
         quiz.setCategoryId(quizReqDTO.categoryId());
 
+        quiz.setStatus(QuizStatus.WAITING_APPROVAL);
+
         return quizRepository.save(quiz);
     }
 

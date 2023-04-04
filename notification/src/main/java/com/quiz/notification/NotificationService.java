@@ -51,4 +51,8 @@ public class NotificationService {
     public void deleteNotification(String id) {
         notificationRepository.deleteById(id);
     }
+
+    public void deleteAll() {
+        notificationRepository.deleteAll();
+    }
 }

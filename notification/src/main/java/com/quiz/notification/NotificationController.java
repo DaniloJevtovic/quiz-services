@@ -48,4 +48,9 @@ public class NotificationController {
     public void deleteNotification(@PathVariable String id) {
         notificationService.deleteNotification(id);
     }
+
+    @DeleteMapping("/all")
+    public void deleteAllNotifications() {
+        notificationService.deleteAll();
+    }
 }
