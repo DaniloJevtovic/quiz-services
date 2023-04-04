@@ -1,7 +1,7 @@
 package com.quiz.user.controler;
 
 import com.quiz.user.user.User;
-import com.quiz.user.user.UserDTO;
+import com.quiz.user.dto.RegisterDTO;
 import com.quiz.user.user.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -25,8 +25,5 @@ public class UserController {
         return userService.getUserById(id);
     }
 
-    @PostMapping
-    public User saveUser(@RequestBody UserDTO dto) {
-        return userService.saveUser(dto);
-    }
+
 }
