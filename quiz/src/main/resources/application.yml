@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: user
+    name: quiz
   datasource:
     url: jdbc:mysql://localhost:3306/quiz?&createDatabaseIfNotExist=true
     username: root
