@@ -54,6 +54,10 @@ public class ChoiceService {
         choiceRepository.deleteById(id);
     }
 
+    public void deleteAll() {
+        choiceRepository.deleteAll();
+    }
+
     public Long deleteAllCoicesForQuestion(String questionId) {
         log.info("obrisani ponudjeni odgovori za pitanje");
         return choiceRepository.deleteByQuestionId(questionId);

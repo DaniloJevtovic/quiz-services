@@ -59,6 +59,11 @@ public class ChoiceController {
         choiceService.deleteChoice(id);
     }
 
+    @DeleteMapping("/all")
+    public void deleteAll() {
+        choiceService.deleteAll();
+    }
+
     @DeleteMapping("/question/{questionId}")
     public void deleteAllChoicesForQuestion(@PathVariable String questionId) {
         choiceService.deleteAllCoicesForQuestion(questionId);
