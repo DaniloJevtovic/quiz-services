@@ -14,6 +14,6 @@ public class Consumer {
 
     @RabbitListener(queues = "${rabbitmq.queues.notification-queue}")
     public void sendNotification(NotificationDTO notificationDTO) {
-        notificationService.save(notificationDTO);
+        notificationService.sendNotification(notificationDTO);
     }
 }

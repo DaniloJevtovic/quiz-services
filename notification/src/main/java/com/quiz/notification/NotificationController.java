@@ -30,13 +30,13 @@ public class NotificationController {
     }
 
     @GetMapping("/reciver/{userId}/unread")
-    public List<Notification> getUnreadNotificationForUser(@PathVariable Integer userId) {
-        return notificationService.getUnreadNotificationSforUser(userId);
+    public List<Notification> getUnreadNotificationsForUser(@PathVariable Integer userId) {
+        return notificationService.getUnreadNotificationsForUser(userId);
     }
 
     @PostMapping
-    public Notification saveNotification(@RequestBody NotificationDTO dto) {
-        return notificationService.save(dto);
+    public Notification sentNotification(@RequestBody NotificationDTO dto) {
+        return notificationService.sendNotification(dto);
     }
 
     @PatchMapping("/{id}")

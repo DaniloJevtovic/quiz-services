@@ -28,11 +28,11 @@ public class NotificationService {
         return notificationRepository.findByReciverId(userId, pageable);
     }
 
-    public List<Notification> getUnreadNotificationSforUser(Integer userId) {
+    public List<Notification> getUnreadNotificationsForUser(Integer userId) {
         return notificationRepository.findByReciverIdAndReadFalse(userId);
     }
 
-    public Notification save(NotificationDTO dto) {
+    public Notification sendNotification(NotificationDTO dto) {
         log.info("notifikacija poslata");
         Notification notification = new Notification();
         notification.setNotification(dto.notification());
