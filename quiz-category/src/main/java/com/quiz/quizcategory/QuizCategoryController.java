@@ -33,7 +33,7 @@ public class QuizCategoryController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteCategory(@PathVariable Integer id) {
-        quizCategoryService.deleteCategoru(id);
+    public String deleteCategory(@PathVariable Integer id) {
+        return quizCategoryService.deleteCategory(id);
     }
 }

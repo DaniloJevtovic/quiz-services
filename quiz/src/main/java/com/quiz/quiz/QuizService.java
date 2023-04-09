@@ -132,4 +132,9 @@ public class QuizService {
     public Double deleteAllQuizesForCategory(Integer categoryId) {
         return quizRepository.deleteByCategoryId(categoryId);
     }
+
+    // u slucaju brisanja kategorije provjeriti da li u njoj postoje kvizovi
+    public Boolean existsQuizzesInCategory(Integer categoryId) {
+        return quizRepository.existsByCategoryId(categoryId);
+    }
 }

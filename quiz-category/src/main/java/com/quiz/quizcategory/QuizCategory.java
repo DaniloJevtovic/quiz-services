@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-//@Table(name = "quiz_category")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,4 +17,5 @@ public class QuizCategory {
 
     private String name;
     private String description;
+//    private Integer numOfQuizzes;
 }

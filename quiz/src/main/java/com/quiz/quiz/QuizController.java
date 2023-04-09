@@ -85,4 +85,9 @@ public class QuizController {
     public Double deleteAllQuiziesForCategory(@PathVariable Integer categoryId) {
         return quizService.deleteAllQuizesForCategory(categoryId);
     }
+
+    @GetMapping("/category/{categoryId}/check")
+    public Boolean checkQuizzesInCategory(@PathVariable Integer categoryId) {
+        return quizService.existsQuizzesInCategory(categoryId);
+    }
 }

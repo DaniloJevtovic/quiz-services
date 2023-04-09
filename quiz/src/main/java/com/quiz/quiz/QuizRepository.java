@@ -17,4 +17,6 @@ public interface QuizRepository extends JpaRepository<Quiz, Integer> {
     List<Quiz> findByCategoryIdAndStatusAndNameContains(Integer catId, QuizStatus status, String name);
 
     Double deleteByCategoryId(Integer categoryId);
+
+    Boolean existsByCategoryId(Integer categoryId);
 }

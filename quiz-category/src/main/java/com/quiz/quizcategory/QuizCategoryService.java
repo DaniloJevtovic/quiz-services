@@ -1,5 +1,6 @@
 package com.quiz.quizcategory;
 
+import com.quiz.clients.quiz.QuizClient;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +11,7 @@ import java.util.List;
 public class QuizCategoryService {
 
     private final QuizCategoryRepository quizCategoryRepository;
+    private final QuizClient quizClient;
 
     public List<QuizCategory> getAll() {
         return quizCategoryRepository.findAll();
@@ -31,9 +33,11 @@ public class QuizCategoryService {
         return quizCategoryRepository.save(category);
     }
 
-    public void deleteCategoru(Integer id) {
-        // provjeriti da li postoje kvizovi u kategoriji, provjeriti da li su ti kvizovi radjeni
+    public String deleteCategory(Integer id) {
+        if (quizClient.checkQuizzesInCategory(id)) return "Nije moguce obrisati kategoriju, postoje kvizovi u njoj!";
+
         quizCategoryRepository.deleteById(id);
+        return "Kategorija uspjesno obrisana";
     }
 
 }
